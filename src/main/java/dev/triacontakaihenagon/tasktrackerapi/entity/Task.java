@@ -1,6 +1,6 @@
 package dev.triacontakaihenagon.tasktrackerapi.entity;
 
-import dev.triacontakaihenagon.tasktrackerapi.dto.TaskRequest;
+import dev.triacontakaihenagon.jwtauth.dto.TaskRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +25,10 @@ public class Task {
     private String title;
     private boolean done;
     private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @PrePersist
     public void onCreate() {

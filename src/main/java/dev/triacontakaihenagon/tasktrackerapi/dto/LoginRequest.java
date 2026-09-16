@@ -6,9 +6,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TaskRequest {
+public class LoginRequest {
     @NotBlank
-    private String title;
-    private boolean done;
-    private Long userId;
+    private String userName;
+    @NotBlank
+    private String password;
 }

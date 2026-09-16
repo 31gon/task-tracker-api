@@ -1,6 +1,6 @@
 package dev.triacontakaihenagon.tasktrackerapi.dto;
 
-import dev.triacontakaihenagon.tasktrackerapi.entity.Task;
+import dev.triacontakaihenagon.jwtauth.entity.Task;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,12 +13,14 @@ public class TaskResponse {
     private String title;
     private boolean done;
     private LocalDateTime createdAt;
+    private Long userId;
 
-    public TaskResponse(Long id, String title, boolean done, LocalDateTime createdAt) {
+    public TaskResponse(Long id, String title, boolean done, LocalDateTime createdAt, Long userId) {
         this.id = id;
         this.title = title;
         this.done = done;
         this.createdAt = createdAt;
+        this.userId = userId;
     }
 
     public TaskResponse(Task task) {
@@ -26,5 +28,6 @@ public class TaskResponse {
         this.title = task.getTitle();
         this.done = task.isDone();
         this.createdAt = task.getCreatedAt();
+        this.userId = task.getUser().getId();
     }
 }
