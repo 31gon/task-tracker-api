@@ -1,7 +1,7 @@
 package dev.triacontakaihenagon.tasktrackerapi.dto;
 
-import dev.triacontakaihenagon.jwtauth.entity.Role;
-import dev.triacontakaihenagon.jwtauth.entity.User;
+import dev.triacontakaihenagon.tasktrackerapi.entity.Role;
+import dev.triacontakaihenagon.tasktrackerapi.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 

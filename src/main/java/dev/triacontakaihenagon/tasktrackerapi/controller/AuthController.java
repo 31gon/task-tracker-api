@@ -1,13 +1,13 @@
 package dev.triacontakaihenagon.tasktrackerapi.controller;
 
-import dev.triacontakaihenagon.jwtauth.dto.LoginRequest;
-import dev.triacontakaihenagon.jwtauth.dto.LoginResponse;
-import dev.triacontakaihenagon.jwtauth.dto.UserRequest;
-import dev.triacontakaihenagon.jwtauth.dto.UserResponse;
-import dev.triacontakaihenagon.jwtauth.entity.Role;
-import dev.triacontakaihenagon.jwtauth.entity.User;
-import dev.triacontakaihenagon.jwtauth.service.JwtService;
-import dev.triacontakaihenagon.jwtauth.service.UserService;
+import dev.triacontakaihenagon.tasktrackerapi.dto.LoginRequest;
+import dev.triacontakaihenagon.tasktrackerapi.dto.LoginResponse;
+import dev.triacontakaihenagon.tasktrackerapi.dto.UserRequest;
+import dev.triacontakaihenagon.tasktrackerapi.dto.UserResponse;
+import dev.triacontakaihenagon.tasktrackerapi.entity.Role;
+import dev.triacontakaihenagon.tasktrackerapi.entity.User;
+import dev.triacontakaihenagon.tasktrackerapi.service.JwtService;
+import dev.triacontakaihenagon.tasktrackerapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

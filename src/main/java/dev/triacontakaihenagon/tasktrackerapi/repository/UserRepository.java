@@ -1,6 +1,6 @@
 package dev.triacontakaihenagon.tasktrackerapi.repository;
 
-import dev.triacontakaihenagon.jwtauth.entity.User;
+import dev.triacontakaihenagon.tasktrackerapi.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

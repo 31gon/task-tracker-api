@@ -1,6 +1,6 @@
 package dev.triacontakaihenagon.tasktrackerapi.dto;
 
-import dev.triacontakaihenagon.jwtauth.entity.Task;
+import dev.triacontakaihenagon.tasktrackerapi.entity.Task;
 import lombok.Getter;
 import lombok.Setter;
 

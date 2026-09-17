@@ -1,10 +1,10 @@
 package dev.triacontakaihenagon.tasktrackerapi.controller;
 
-import dev.triacontakaihenagon.jwtauth.dto.UserRequest;
-import dev.triacontakaihenagon.jwtauth.dto.UserResponse;
-import dev.triacontakaihenagon.jwtauth.entity.User;
-import dev.triacontakaihenagon.jwtauth.exception.UserNotFoundException;
-import dev.triacontakaihenagon.jwtauth.service.UserService;
+import dev.triacontakaihenagon.tasktrackerapi.dto.UserRequest;
+import dev.triacontakaihenagon.tasktrackerapi.dto.UserResponse;
+import dev.triacontakaihenagon.tasktrackerapi.entity.User;
+import dev.triacontakaihenagon.tasktrackerapi.exception.UserNotFoundException;
+import dev.triacontakaihenagon.tasktrackerapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,6 +1,6 @@
 package dev.triacontakaihenagon.tasktrackerapi.entity;
 
-import dev.triacontakaihenagon.jwtauth.dto.UserRequest;
+import dev.triacontakaihenagon.tasktrackerapi.dto.UserRequest;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.Getter;

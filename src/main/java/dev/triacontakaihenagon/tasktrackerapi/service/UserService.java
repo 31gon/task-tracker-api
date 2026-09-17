@@ -1,8 +1,8 @@
 package dev.triacontakaihenagon.tasktrackerapi.service;
 
-import dev.triacontakaihenagon.jwtauth.entity.User;
-import dev.triacontakaihenagon.jwtauth.exception.UserNotFoundException;
-import dev.triacontakaihenagon.jwtauth.repository.UserRepository;
+import dev.triacontakaihenagon.tasktrackerapi.entity.User;
+import dev.triacontakaihenagon.tasktrackerapi.exception.UserNotFoundException;
+import dev.triacontakaihenagon.tasktrackerapi.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

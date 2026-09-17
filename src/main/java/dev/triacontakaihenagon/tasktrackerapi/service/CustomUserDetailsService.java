@@ -1,7 +1,7 @@
 package dev.triacontakaihenagon.tasktrackerapi.service;
 
-import dev.triacontakaihenagon.jwtauth.entity.User;
-import dev.triacontakaihenagon.jwtauth.repository.UserRepository;
+import dev.triacontakaihenagon.tasktrackerapi.entity.User;
+import dev.triacontakaihenagon.tasktrackerapi.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

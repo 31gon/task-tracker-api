@@ -1,9 +1,9 @@
 package dev.triacontakaihenagon.tasktrackerapi.controller;
 
-import dev.triacontakaihenagon.jwtauth.dto.TaskRequest;
-import dev.triacontakaihenagon.jwtauth.dto.TaskResponse;
-import dev.triacontakaihenagon.jwtauth.entity.Task;
-import dev.triacontakaihenagon.jwtauth.service.TaskService;
+import dev.triacontakaihenagon.tasktrackerapi.dto.TaskRequest;
+import dev.triacontakaihenagon.tasktrackerapi.dto.TaskResponse;
+import dev.triacontakaihenagon.tasktrackerapi.entity.Task;
+import dev.triacontakaihenagon.tasktrackerapi.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

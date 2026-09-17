@@ -1,6 +1,6 @@
 package dev.triacontakaihenagon.tasktrackerapi.dto;
 
-import dev.triacontakaihenagon.jwtauth.entity.Role;
+import dev.triacontakaihenagon.tasktrackerapi.entity.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
