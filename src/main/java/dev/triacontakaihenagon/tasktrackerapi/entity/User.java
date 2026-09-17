@@ -23,7 +23,7 @@ public class User {
         this.password = userRequest.getPassword();
     }
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userName;
     private String password;//Hash later I guess
