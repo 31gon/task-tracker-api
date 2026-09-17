@@ -6,12 +6,15 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+import java.util.List;
+
+@Getter @Setter
 public class TaskRequest {
     @NotBlank
     private String title;
     private TaskStatus status;
-    private Long userId;
     private TaskPriority priority;
+    private Long userId;
+    private Long categoryId;
+    private List<Long> labelIds;
 }

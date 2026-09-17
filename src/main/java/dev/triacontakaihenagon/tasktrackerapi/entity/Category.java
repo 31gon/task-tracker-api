@@ -7,8 +7,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Getter @Setter
 @Entity
 @Table(name = "categories")
 public class Category {

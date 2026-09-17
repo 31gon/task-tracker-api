@@ -11,13 +11,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(TaskNotFoundException.class)
-    public ResponseEntity<String> taskNotFound(TaskNotFoundException err) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err.getMessage());
-    }
-
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<String> userNotFound(UserNotFoundException err) {
+    @ExceptionHandler({
+            TaskNotFoundException.class, UserNotFoundException.class,
+            CategoryNotFoundException.class, LabelNotFoundException.class
+    }) public ResponseEntity<String> notFound(RuntimeException err) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err.getMessage());
     }
 
@@ -25,6 +22,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> badCredentials(BadCredentialsException err) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
     }
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<String> accessDenied(AccessDeniedException err) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err.getMessage());

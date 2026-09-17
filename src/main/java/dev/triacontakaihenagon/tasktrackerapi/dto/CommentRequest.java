@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class LoginRequest {
+public class CommentRequest {
     @NotBlank
-    private String userName;
-    @NotBlank
-    private String password;
+    private String content;
 }

@@ -1,8 +1,6 @@
 package dev.triacontakaihenagon.tasktrackerapi.entity;
 
-import dev.triacontakaihenagon.tasktrackerapi.dto.UserRequest;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,18 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Getter
-@Setter
+@Getter @Setter
 @Entity
 @Table(name = "users")
 public class User {
     public User() {}
-
-    public User(@Valid UserRequest userRequest) {
-        this.userName = userRequest.getUserName();
-        this.role = (userRequest.getRole() != null) ? userRequest.getRole() : Role.USER;
-        this.password = userRequest.getPassword();
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -3,8 +3,7 @@ package dev.triacontakaihenagon.tasktrackerapi.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Getter @Setter
 public class LoginResponse {
     private String token;
 

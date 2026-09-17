@@ -1,6 +1,5 @@
 package dev.triacontakaihenagon.tasktrackerapi.entity;
 
-import dev.triacontakaihenagon.tasktrackerapi.dto.TaskRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,12 +14,6 @@ import java.util.List;
 @Table(name = "tasks")
 public class Task {
     public Task() {
-    }
-
-    public Task(TaskRequest request) {
-        this.title = request.getTitle();
-        this.status = (request.getStatus() != null) ? request.getStatus() : TaskStatus.TODO;
-        this.priority = (request.getPriority() != null) ? request.getPriority() : TaskPriority.LOW;
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

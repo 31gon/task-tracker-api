@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class LoginRequest {
+public class CategoryRequest {
     @NotBlank
-    private String userName;
-    @NotBlank
-    private String password;
+    private String name;
 }
+
+

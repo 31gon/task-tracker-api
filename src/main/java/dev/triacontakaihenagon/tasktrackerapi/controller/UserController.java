@@ -4,6 +4,7 @@ import dev.triacontakaihenagon.tasktrackerapi.dto.UserRequest;
 import dev.triacontakaihenagon.tasktrackerapi.dto.UserResponse;
 import dev.triacontakaihenagon.tasktrackerapi.entity.User;
 import dev.triacontakaihenagon.tasktrackerapi.exception.UserNotFoundException;
+import dev.triacontakaihenagon.tasktrackerapi.mapper.UserMapper;
 import dev.triacontakaihenagon.tasktrackerapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -17,22 +18,22 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final UserMapper userMapper;
 
-    UserController(UserService userService) {
+    UserController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
+        this.userMapper = userMapper;
     }
 
     @GetMapping
     public List<UserResponse> getUsers() {
-        return userService.getAllUser().stream()
-                .map(UserResponse::new)
-                .toList();
+        return userMapper.toResponseList(userService.getAllUser());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUser(@PathVariable Long id) {
         return userService.getUserById(id)
-                .map(UserResponse::new)
+                .map(userMapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -46,8 +47,7 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public UserResponse updateUser(@PathVariable Long id, @RequestBody @Valid UserRequest userRequest) {
-        User user = new User(userRequest);
-        return new UserResponse (userService.updateUser(id, user));
+        return userMapper.toResponse(userService.updateUser(id, userRequest));
     }
 
     @GetMapping("/me")
@@ -55,6 +55,6 @@ public class UserController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.getCurrentUser(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found: " + username));
-        return new UserResponse(user);
+        return userMapper.toResponse(user);
     }
 }

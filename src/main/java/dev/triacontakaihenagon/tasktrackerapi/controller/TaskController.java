@@ -2,7 +2,7 @@ package dev.triacontakaihenagon.tasktrackerapi.controller;
 
 import dev.triacontakaihenagon.tasktrackerapi.dto.TaskRequest;
 import dev.triacontakaihenagon.tasktrackerapi.dto.TaskResponse;
-import dev.triacontakaihenagon.tasktrackerapi.entity.Task;
+import dev.triacontakaihenagon.tasktrackerapi.mapper.TaskMapper;
 import dev.triacontakaihenagon.tasktrackerapi.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -14,29 +14,29 @@ import java.util.List;
 @RequestMapping("/tasks")
 public class TaskController {
     private final TaskService taskService;
+    private final TaskMapper taskMapper;
 
-    TaskController(TaskService taskService) {
+    TaskController(TaskService taskService, TaskMapper taskMapper) {
         this.taskService = taskService;
+        this.taskMapper = taskMapper;
     }
 
     @GetMapping
     public List<TaskResponse> getTasks() {
-        return taskService.getAllTask().stream()
-                .map(TaskResponse::new)
-                .toList();
+        return taskMapper.toResponseList(taskService.getAllTask());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponse> getTask(@PathVariable Long id) {
         return taskService.getTaskById(id)
-                .map(TaskResponse::new)
+                .map(taskMapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public TaskResponse postTasks(@RequestBody @Valid TaskRequest taskRequest) {
-        return new TaskResponse(taskService.createTask(taskRequest));
+        return taskMapper.toResponse(taskService.createTask(taskRequest));
     }
 
     @DeleteMapping("/{id}")
@@ -46,7 +46,6 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public TaskResponse updateTask(@PathVariable Long id,@RequestBody @Valid TaskRequest taskRequest) {
-        Task task = new Task(taskRequest);
-        return new TaskResponse (taskService.updateTask(id, task));
+        return taskMapper.toResponse(taskService.updateTask(id, taskRequest));
     }
 }

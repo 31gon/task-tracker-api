@@ -5,7 +5,7 @@ import dev.triacontakaihenagon.tasktrackerapi.dto.LoginResponse;
 import dev.triacontakaihenagon.tasktrackerapi.dto.UserRequest;
 import dev.triacontakaihenagon.tasktrackerapi.dto.UserResponse;
 import dev.triacontakaihenagon.tasktrackerapi.entity.Role;
-import dev.triacontakaihenagon.tasktrackerapi.entity.User;
+import dev.triacontakaihenagon.tasktrackerapi.mapper.UserMapper;
 import dev.triacontakaihenagon.tasktrackerapi.service.JwtService;
 import dev.triacontakaihenagon.tasktrackerapi.service.UserService;
 import jakarta.validation.Valid;
@@ -22,18 +22,19 @@ public class AuthController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final UserMapper userMapper;
 
-    public AuthController(UserService userService, AuthenticationManager authenticationManager, JwtService jwtService) {
+    public AuthController(UserService userService, AuthenticationManager authenticationManager, JwtService jwtService, UserMapper userMapper) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
+        this.userMapper = userMapper;
     }
 
     @PostMapping("/register")
     public UserResponse register(@RequestBody @Valid UserRequest request) {
         request.setRole(Role.USER);
-        User user = new User(request);
-        return new UserResponse(userService.createUser(user));
+        return userMapper.toResponse(userService.createUser(request));
     }
 
     @PostMapping("/login")
