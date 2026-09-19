@@ -6,7 +6,7 @@ import dev.triacontakaihenagon.tasktrackerapi.dto.UserRequest;
 import dev.triacontakaihenagon.tasktrackerapi.dto.UserResponse;
 import dev.triacontakaihenagon.tasktrackerapi.entity.Role;
 import dev.triacontakaihenagon.tasktrackerapi.mapper.UserMapper;
-import dev.triacontakaihenagon.tasktrackerapi.service.JwtService;
+import dev.triacontakaihenagon.tasktrackerapi.security.JwtService;
 import dev.triacontakaihenagon.tasktrackerapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.authentication.AuthenticationManager;

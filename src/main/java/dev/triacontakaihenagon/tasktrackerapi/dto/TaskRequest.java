@@ -14,7 +14,6 @@ public class TaskRequest {
     private String title;
     private TaskStatus status;
     private TaskPriority priority;
-    private Long userId;
     private Long categoryId;
     private List<Long> labelIds;
 }

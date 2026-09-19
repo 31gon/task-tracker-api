@@ -16,7 +16,7 @@ public class LabelService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Label> getAllCategories() {
+    public List<Label> getAllLabels() {
         return categoryRepository.findAll();
     }
 

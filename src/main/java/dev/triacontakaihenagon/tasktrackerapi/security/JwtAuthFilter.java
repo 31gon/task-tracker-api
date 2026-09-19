@@ -1,6 +1,5 @@
 package dev.triacontakaihenagon.tasktrackerapi.security;
 
-import dev.triacontakaihenagon.tasktrackerapi.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

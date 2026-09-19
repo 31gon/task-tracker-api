@@ -6,6 +6,7 @@ import dev.triacontakaihenagon.tasktrackerapi.mapper.TaskMapper;
 import dev.triacontakaihenagon.tasktrackerapi.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,25 +28,27 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaskResponse> getTask(@PathVariable Long id) {
-        return taskService.getTaskById(id)
-                .map(taskMapper::toResponse)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public TaskResponse getTask(@PathVariable Long id, Authentication auth) {
+        return taskMapper.toResponse(taskService.getTaskById(id, auth.getName(), isAdmin(auth)));
     }
 
     @PostMapping
-    public TaskResponse postTasks(@RequestBody @Valid TaskRequest taskRequest) {
-        return taskMapper.toResponse(taskService.createTask(taskRequest));
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        taskService.deleteTask(id);
+    public TaskResponse postTasks(@RequestBody @Valid TaskRequest request, Authentication auth) {
+        return taskMapper.toResponse(taskService.createTask(request, auth.getName()));
     }
 
     @PutMapping("/{id}")
-    public TaskResponse updateTask(@PathVariable Long id,@RequestBody @Valid TaskRequest taskRequest) {
-        return taskMapper.toResponse(taskService.updateTask(id, taskRequest));
+    public TaskResponse updateTask(@PathVariable Long id, @RequestBody @Valid TaskRequest request, Authentication auth) {
+        return taskMapper.toResponse(taskService.updateTask(id, request, auth.getName(), isAdmin(auth)));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable Long id, Authentication auth) {
+        taskService.deleteTask(id, auth.getName(), isAdmin(auth));
+    }
+
+    private boolean isAdmin(Authentication auth) {
+        return auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
     }
 }
