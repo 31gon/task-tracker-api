@@ -38,3 +38,4 @@ out/
 
 *.log
 .env
+application-local.yaml
