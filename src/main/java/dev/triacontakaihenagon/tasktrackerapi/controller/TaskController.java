@@ -1,11 +1,13 @@
 package dev.triacontakaihenagon.tasktrackerapi.controller;
 
+import dev.triacontakaihenagon.tasktrackerapi.dto.TaskFilter;
 import dev.triacontakaihenagon.tasktrackerapi.dto.TaskRequest;
 import dev.triacontakaihenagon.tasktrackerapi.dto.TaskResponse;
 import dev.triacontakaihenagon.tasktrackerapi.mapper.TaskMapper;
 import dev.triacontakaihenagon.tasktrackerapi.service.TaskService;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +47,11 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id, Authentication auth) {
         taskService.deleteTask(id, auth.getName(), isAdmin(auth));
+    }
+
+    @GetMapping("/search")
+    public Page<TaskResponse> search(TaskFilter filter, Pageable pageable, Authentication auth) {
+        return taskService.search(filter, pageable).map(taskMapper::toResponse);
     }
 
     private boolean isAdmin(Authentication auth) {

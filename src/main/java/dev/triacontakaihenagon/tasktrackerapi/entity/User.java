@@ -17,7 +17,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userName;
-    private String password;//Hash later I guess
+    private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
 

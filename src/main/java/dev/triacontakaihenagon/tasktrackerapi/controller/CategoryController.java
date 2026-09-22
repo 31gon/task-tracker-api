@@ -1,5 +1,6 @@
 package dev.triacontakaihenagon.tasktrackerapi.controller;
 
+import dev.triacontakaihenagon.tasktrackerapi.dto.CategoryFilter;
 import dev.triacontakaihenagon.tasktrackerapi.dto.CategoryRequest;
 import dev.triacontakaihenagon.tasktrackerapi.dto.CategoryResponse;
 import dev.triacontakaihenagon.tasktrackerapi.mapper.CategoryMapper;
@@ -42,5 +43,10 @@ public class CategoryController {
     @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
+    }
+
+    @GetMapping("/search")
+    public List<CategoryResponse> search(CategoryFilter filter) {
+        return categoryMapper.toResponseList(categoryService.search(filter));
     }
 }

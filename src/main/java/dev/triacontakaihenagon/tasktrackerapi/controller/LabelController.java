@@ -1,5 +1,6 @@
 package dev.triacontakaihenagon.tasktrackerapi.controller;
 
+import dev.triacontakaihenagon.tasktrackerapi.dto.LabelFilter;
 import dev.triacontakaihenagon.tasktrackerapi.dto.LabelRequest;
 import dev.triacontakaihenagon.tasktrackerapi.dto.LabelResponse;
 import dev.triacontakaihenagon.tasktrackerapi.mapper.LabelMapper;
@@ -42,5 +43,10 @@ public class LabelController {
     @DeleteMapping("/{id}")
     public void deleteLabel(@PathVariable Long id) {
         labelService.deleteLabel(id);
+    }
+
+    @GetMapping("/search")
+    public List<LabelResponse> search(LabelFilter filter) {
+        return labelMapper.toResponseList(labelService.search(filter));
     }
 }

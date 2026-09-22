@@ -1,12 +1,13 @@
 package dev.triacontakaihenagon.tasktrackerapi.controller;
 
-import dev.triacontakaihenagon.tasktrackerapi.dto.UserRequest;
-import dev.triacontakaihenagon.tasktrackerapi.dto.UserResponse;
+import dev.triacontakaihenagon.tasktrackerapi.dto.*;
 import dev.triacontakaihenagon.tasktrackerapi.entity.User;
 import dev.triacontakaihenagon.tasktrackerapi.exception.UserNotFoundException;
 import dev.triacontakaihenagon.tasktrackerapi.mapper.UserMapper;
 import dev.triacontakaihenagon.tasktrackerapi.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -56,5 +57,11 @@ public class UserController {
         User user = userService.getCurrentUser(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found: " + username));
         return userMapper.toResponse(user);
+    }
+
+    @GetMapping("/search")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Page<UserResponse> search(UserFilter filter, Pageable pageable) {
+        return userService.search(filter, pageable).map(userMapper::toResponse);
     }
 }

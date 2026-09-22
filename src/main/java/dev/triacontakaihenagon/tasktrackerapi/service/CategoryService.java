@@ -1,9 +1,12 @@
 package dev.triacontakaihenagon.tasktrackerapi.service;
 
+import dev.triacontakaihenagon.tasktrackerapi.dto.CategoryFilter;
 import dev.triacontakaihenagon.tasktrackerapi.dto.CategoryRequest;
 import dev.triacontakaihenagon.tasktrackerapi.entity.Category;
 import dev.triacontakaihenagon.tasktrackerapi.exception.CategoryNotFoundException;
 import dev.triacontakaihenagon.tasktrackerapi.repository.CategoryRepository;
+import dev.triacontakaihenagon.tasktrackerapi.repository.CategorySpecs;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,5 +39,10 @@ public class CategoryService {
     public void deleteCategory(Long id) {
         if (categoryRepository.existsById(id)) categoryRepository.deleteById(id);
         else throw new CategoryNotFoundException("Category with " + id + " not found");
+    }
+
+    public List<Category> search(CategoryFilter f) {
+        Specification<Category> spec = Specification.allOf(CategorySpecs.nameContains(f.name()));
+        return categoryRepository.findAll(spec);
     }
 }
