@@ -1,0 +1,3 @@
+jwt:
+  secret: test-secret-key-for-tests-only-1234567890
+  expiration-ms: 3600000
