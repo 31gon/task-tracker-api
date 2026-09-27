@@ -17,6 +17,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -127,6 +128,6 @@ public class TaskService {
     }
 
     public List<Task> getOverdueTasks() {
-        return null;
+        return taskRepository.findByDueDateBeforeAndStatusNot(LocalDateTime.now(), TaskStatus.DONE);
     }
 }
