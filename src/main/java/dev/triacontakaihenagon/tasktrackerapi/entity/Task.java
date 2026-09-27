@@ -54,6 +54,6 @@ public class Task {
     }
 
     public boolean isOverdue() {
-        return false;
+        return dueDate != null && dueDate.isBefore(LocalDateTime.now()) && status != TaskStatus.DONE;
     }
 }
