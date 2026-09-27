@@ -128,6 +128,7 @@ public class TaskService {
     }
 
     public List<Task> getOverdueTasks(String username) {
-        return taskRepository.findByDueDateBeforeAndStatusNot(LocalDateTime.now(), TaskStatus.DONE);
+        Specification<Task> spec = Specification.allOf(TaskSpecs.overdue(), TaskSpecs.ownedBy(username));
+        return taskRepository.findAll(spec);
     }
 }

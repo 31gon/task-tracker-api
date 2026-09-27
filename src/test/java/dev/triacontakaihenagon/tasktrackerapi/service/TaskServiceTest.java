@@ -201,28 +201,6 @@ class TaskServiceTest {
     }
 
     @Test
-    void getOverdueTasks_returnsTasksFromRepository() {
-        Task overdueTask = new Task();
-        overdueTask.setDueDate(LocalDateTime.now().minusDays(1));
-        overdueTask.setStatus(TaskStatus.TODO);
-
-        when(taskRepository.findByDueDateBeforeAndStatusNot(any(LocalDateTime.class), eq(TaskStatus.DONE)))
-                .thenReturn(List.of(overdueTask));
-
-        List<Task> result = taskService.getOverdueTasks(null);
-
-        assertThat(result).containsExactly(overdueTask);
-    }
-
-    @Test
-    void getOverdueTasks_noneOverdue_returnsEmptyList() {
-        when(taskRepository.findByDueDateBeforeAndStatusNot(any(LocalDateTime.class), eq(TaskStatus.DONE)))
-                .thenReturn(List.of());
-
-        assertThat(taskService.getOverdueTasks(null)).isEmpty();
-    }
-
-    @Test
     void getOverdueTasks_global_delegatesToRepositoryWithoutOwnershipFilter() {
         Task overdue = new Task();
         when(taskRepository.findAll(any(Specification.class))).thenReturn(List.of(overdue));
