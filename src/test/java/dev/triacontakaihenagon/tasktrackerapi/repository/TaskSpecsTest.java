@@ -60,6 +60,15 @@ class TaskSpecsTest {
         return task;
     }
 
+    private Task save(String title, TaskStatus status, TaskPriority priority,
+                      Category category, LocalDateTime createdAt, LocalDateTime dueDate) {
+        Task task = save(title, status, priority, category, createdAt);
+        task.setDueDate(dueDate);
+        entityManager.merge(task);
+        entityManager.flush();
+        return task;
+    }
+
     @Test
     void hasStatus_filtersExactMatch() {
         save("A", TaskStatus.TODO, TaskPriority.LOW, workCategory, null);
@@ -154,5 +163,57 @@ class TaskSpecsTest {
                 TaskSpecs.inCategory(workCategory.getId())));
 
         assertThat(result).extracting(Task::getTitle).containsExactly("match");
+    }
+
+    @Test
+    void overdue_matchesPastDueDateAndNotDone() {
+        save("late todo", TaskStatus.TODO, TaskPriority.LOW, workCategory, null,
+                LocalDateTime.now().minusDays(1));
+        save("late but done", TaskStatus.DONE, TaskPriority.LOW, workCategory, null,
+                LocalDateTime.now().minusDays(1));
+        save("future", TaskStatus.TODO, TaskPriority.LOW, workCategory, null,
+                LocalDateTime.now().plusDays(1));
+        save("no due date", TaskStatus.TODO, TaskPriority.LOW, workCategory, null, null);
+
+        List<Task> result = taskRepository.findAll(
+                Specification.allOf(TaskSpecs.overdue()));
+
+        assertThat(result).extracting(Task::getTitle).containsExactly("late todo");
+    }
+
+    @Test
+    void ownedBy_filtersByUsername() {
+        User bob = new User();
+        bob.setUserName("bob");
+        bob.setPassword("hashed");
+        bob.setRole(Role.USER);
+        entityManager.persist(bob);
+
+        Task aliceTask = save("alice's", TaskStatus.TODO, TaskPriority.LOW, workCategory, null,
+                LocalDateTime.now().minusDays(1));
+        Task bobTask = new Task();
+        bobTask.setTitle("bob's");
+        bobTask.setUser(bob);
+        bobTask.setStatus(TaskStatus.TODO);
+        bobTask.setPriority(TaskPriority.LOW);
+        bobTask.setCategory(workCategory);
+        bobTask.setDueDate(LocalDateTime.now().minusDays(1));
+        entityManager.persist(bobTask);
+        entityManager.flush();
+
+        List<Task> result = taskRepository.findAll(
+                Specification.allOf(TaskSpecs.overdue(), TaskSpecs.ownedBy("alice")));
+
+        assertThat(result).extracting(Task::getTitle).containsExactly(aliceTask.getTitle());
+    }
+
+    @Test
+    void ownedBy_null_returnsEverything() {
+        save("A", TaskStatus.TODO, TaskPriority.LOW, workCategory, null, LocalDateTime.now().minusDays(1));
+
+        List<Task> result = taskRepository.findAll(
+                Specification.allOf(TaskSpecs.overdue(), TaskSpecs.ownedBy(null)));
+
+        assertThat(result).hasSize(1);
     }
 }

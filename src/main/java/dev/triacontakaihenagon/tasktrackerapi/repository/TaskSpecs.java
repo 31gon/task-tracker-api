@@ -40,5 +40,13 @@ public final class TaskSpecs {
         return (root, query, cb) -> d == null ? null
                 : cb.lessThan(root.get("createdAt"), d.plusDays(1).atStartOfDay());
     }
+
+    public static Specification<Task> overdue() {
+        return null;
+    }
+
+    public static Specification<Task> ownedBy(String name) {
+        return null;
+    }
 }
 
