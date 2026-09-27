@@ -44,7 +44,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-validation-test")
     testImplementation("org.mockito:mockito-core")
     testImplementation("org.mockito:mockito-junit-jupiter")
-    testImplementation("com.h2database:h2")
+//    testImplementation("com.h2database:h2")
 
     testCompileOnly("org.projectlombok:lombok")
 
