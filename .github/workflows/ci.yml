@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: taskdb
+          POSTGRES_USER: task
+          POSTGRES_PASSWORD: task
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build and test
+        run: ./gradlew build
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/taskdb
+          SPRING_DATASOURCE_USERNAME: task
+          SPRING_DATASOURCE_PASSWORD: task
+          JWT_SECRET: test-secret-not-for-prod

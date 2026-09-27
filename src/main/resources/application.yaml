@@ -1,12 +1,17 @@
 spring:
   application:
     name: task-tracker-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/taskdb
+    username: task
+    password: task
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         generate_statistics: true
         default_batch_fetch_size: 50
   data:
