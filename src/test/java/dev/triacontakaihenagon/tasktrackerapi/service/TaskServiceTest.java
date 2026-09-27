@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.access.AccessDeniedException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -196,5 +197,27 @@ class TaskServiceTest {
 
         assertThatThrownBy(() -> taskService.deleteTask(404L))
                 .isInstanceOf(TaskNotFoundException.class);
+    }
+
+    @Test
+    void getOverdueTasks_returnsTasksFromRepository() {
+        Task overdueTask = new Task();
+        overdueTask.setDueDate(LocalDateTime.now().minusDays(1));
+        overdueTask.setStatus(TaskStatus.TODO);
+
+        when(taskRepository.findByDueDateBeforeAndStatusNot(any(LocalDateTime.class), eq(TaskStatus.DONE)))
+                .thenReturn(List.of(overdueTask));
+
+        List<Task> result = taskService.getOverdueTasks();
+
+        assertThat(result).containsExactly(overdueTask);
+    }
+
+    @Test
+    void getOverdueTasks_noneOverdue_returnsEmptyList() {
+        when(taskRepository.findByDueDateBeforeAndStatusNot(any(LocalDateTime.class), eq(TaskStatus.DONE)))
+                .thenReturn(List.of());
+
+        assertThat(taskService.getOverdueTasks()).isEmpty();
     }
 }

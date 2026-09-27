@@ -5,8 +5,11 @@ import dev.triacontakaihenagon.tasktrackerapi.entity.TaskStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificationExecutor<Task> {
     List<Task> findByStatus(TaskStatus status);
+
+    List<Task> findByDueDateBeforeAndStatusNot(LocalDateTime dateTime, TaskStatus status);
 }
