@@ -18,7 +18,7 @@ Portfolio project - REST API for task and/or issue tracking, built with Spring B
  - [1] Filtering & pagination
  - [1] Tests
  - [1] Docker setup
- - [0] API docs
+ - [1] API docs
 
 ## Local setup
 Require local profile to run. Create `src/main/resources/application-local.yaml` with your own 256-bit secret:
@@ -34,3 +34,6 @@ Generate one with: `openssl rand -base64 32`
 ```bash
 SPRING_PROFILES_ACTIVE=local ./gradlew bootRun
 ```
+
+## API docs
+Swagger UI: http://localhost:8080/swagger-ui.html
