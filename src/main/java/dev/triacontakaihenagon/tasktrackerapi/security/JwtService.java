@@ -36,8 +36,8 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token, String username) {
-        Claims claims = parseClaims(token);
-        return claims.getSubject().equals(username) && !claims.getExpiration().before(new Date());
+        try { return parseClaims(token).getSubject().equals(username);
+        } catch (io.jsonwebtoken.JwtException e)  {return false;}
     }
 
     private Claims parseClaims(String token) {
