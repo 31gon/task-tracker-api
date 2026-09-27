@@ -43,4 +43,4 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/taskdb
           SPRING_DATASOURCE_USERNAME: task
           SPRING_DATASOURCE_PASSWORD: task
-          JWT_SECRET: test-secret-not-for-prod
+          JWT_SECRET: IyT3Y1/bFFkqgWr18O20hrqA8nGkzCduOWvcFySMIhOIS/XGJJrq+YmMVueevGIvrFnx7hNVjaPu6na7kogr/g==
