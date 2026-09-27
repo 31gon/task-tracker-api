@@ -15,7 +15,10 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import tools.jackson.databind.ObjectMapper;
 
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -124,5 +127,29 @@ class TaskControllerTest extends SecuredWebMvcTestBase {
     void getTask_returns401WhenUnauthenticated() throws Exception {
         mockMvc.perform(get("/tasks/1"))
                 .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser(username = "alice")
+    void getOverdueTasks_default_isGlobal() throws Exception {
+        when(taskService.getOverdueTasks(null)).thenReturn(List.of());
+        when(taskMapper.toResponseList(List.of())).thenReturn(List.of());
+
+        mockMvc.perform(get("/tasks/overdue"))
+                .andExpect(status().isOk());
+
+        verify(taskService).getOverdueTasks(null);
+    }
+
+    @Test
+    @WithMockUser(username = "alice")
+    void getOverdueTasks_mineTrue_scopesToCurrentUser() throws Exception {
+        when(taskService.getOverdueTasks("alice")).thenReturn(List.of());
+        when(taskMapper.toResponseList(List.of())).thenReturn(List.of());
+
+        mockMvc.perform(get("/tasks/overdue?mine=true"))
+                .andExpect(status().isOk());
+
+        verify(taskService).getOverdueTasks("alice");
     }
 }

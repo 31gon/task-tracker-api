@@ -12,8 +12,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.AccessDeniedException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -196,5 +198,25 @@ class TaskServiceTest {
 
         assertThatThrownBy(() -> taskService.deleteTask(404L))
                 .isInstanceOf(TaskNotFoundException.class);
+    }
+
+    @Test
+    void getOverdueTasks_global_delegatesToRepositoryWithoutOwnershipFilter() {
+        Task overdue = new Task();
+        when(taskRepository.findAll(any(Specification.class))).thenReturn(List.of(overdue));
+
+        List<Task> result = taskService.getOverdueTasks(null);
+
+        assertThat(result).containsExactly(overdue);
+    }
+
+    @Test
+    void getOverdueTasks_scoped_delegatesToRepository() {
+        Task overdue = new Task();
+        when(taskRepository.findAll(any(Specification.class))).thenReturn(List.of(overdue));
+
+        List<Task> result = taskService.getOverdueTasks("alice");
+
+        assertThat(result).containsExactly(overdue);
     }
 }

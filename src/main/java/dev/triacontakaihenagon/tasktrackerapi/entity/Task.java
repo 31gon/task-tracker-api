@@ -27,6 +27,7 @@ public class Task {
     private TaskPriority priority = TaskPriority.MEDIUM;
 
     private LocalDateTime createdAt;
+    private LocalDateTime dueDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -50,5 +51,9 @@ public class Task {
     @PrePersist
     public void onCreate() {
         this.createdAt = LocalDateTime.now();
+    }
+
+    public boolean isOverdue() {
+        return dueDate != null && dueDate.isBefore(LocalDateTime.now()) && status != TaskStatus.DONE;
     }
 }

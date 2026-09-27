@@ -17,6 +17,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -124,5 +125,10 @@ public class TaskService {
             orders.add(Sort.Order.asc("id"));
         }
         return PageRequest.of(p.getPageNumber(), p.getPageSize(), Sort.by(orders));
+    }
+
+    public List<Task> getOverdueTasks(String username) {
+        Specification<Task> spec = Specification.allOf(TaskSpecs.overdue(), TaskSpecs.ownedBy(username));
+        return taskRepository.findAll(spec);
     }
 }

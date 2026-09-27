@@ -6,6 +6,7 @@ import dev.triacontakaihenagon.tasktrackerapi.entity.TaskStatus;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public final class TaskSpecs {
     private TaskSpecs() {}
@@ -39,6 +40,17 @@ public final class TaskSpecs {
     public static Specification<Task> createdTo(LocalDate d) {
         return (root, query, cb) -> d == null ? null
                 : cb.lessThan(root.get("createdAt"), d.plusDays(1).atStartOfDay());
+    }
+
+    public static Specification<Task> overdue() {
+        return (root, query, cb) -> cb.and(
+                cb.lessThan(root.get("dueDate"), LocalDateTime.now()),
+                cb.notEqual(root.get("status"), TaskStatus.DONE));
+    }
+
+    public static Specification<Task> ownedBy(String username) {
+        return (root, query, cb) -> username == null ? null
+                : cb.equal(root.get("user").get("userName"), username);
     }
 }
 
