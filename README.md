@@ -17,7 +17,7 @@ Portfolio project - REST API for task and/or issue tracking, built with Spring B
  - [1] JWT Auth
  - [1] Filtering & pagination
  - [1] Tests
- - [0] Docker setup
+ - [1] Docker setup
  - [0] API docs
 
 ## Local setup

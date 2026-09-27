@@ -16,7 +16,7 @@ spring:
         max-page-size: 100
         serialization-mode: via_dto
 jwt:
-  secret: test-secret-key-for-tests-only-1234567890
+  secret: 84741dH0zWyKbRnFh4tggzvGQJoRP5ZeSmY39hAA87srJsL9vsnyZPCP4d5Y5IUAbQZSWhvbRkq6X43I+ULOXQ==
   expiration-ms: 3600000
 logging:
   level:
