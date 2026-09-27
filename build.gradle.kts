@@ -26,7 +26,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("io.jsonwebtoken:jjwt-api:0.12.6")
     implementation("org.mapstruct:mapstruct:1.6.3")
-
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0")
 
     compileOnly("org.projectlombok:lombok")
 
