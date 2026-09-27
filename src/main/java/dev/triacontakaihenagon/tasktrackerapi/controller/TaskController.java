@@ -54,6 +54,14 @@ public class TaskController {
         return taskService.search(filter, pageable).map(taskMapper::toResponse);
     }
 
+    @GetMapping("/overdue")
+    public List<TaskResponse> getOverdueTasks(
+            @RequestParam(required = false, defaultValue = "false") boolean mine,
+            Authentication auth) {
+        String username = mine ? auth.getName() : null;
+        return taskMapper.toResponseList(taskService.getOverdueTasks(username));
+    }
+
     private boolean isAdmin(Authentication auth) {
         return auth.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
