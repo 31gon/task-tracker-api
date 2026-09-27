@@ -127,7 +127,7 @@ public class TaskService {
         return PageRequest.of(p.getPageNumber(), p.getPageSize(), Sort.by(orders));
     }
 
-    public List<Task> getOverdueTasks() {
+    public List<Task> getOverdueTasks(String username) {
         return taskRepository.findByDueDateBeforeAndStatusNot(LocalDateTime.now(), TaskStatus.DONE);
     }
 }

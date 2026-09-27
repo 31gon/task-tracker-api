@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.AccessDeniedException;
 
 import java.time.LocalDateTime;
@@ -208,7 +209,7 @@ class TaskServiceTest {
         when(taskRepository.findByDueDateBeforeAndStatusNot(any(LocalDateTime.class), eq(TaskStatus.DONE)))
                 .thenReturn(List.of(overdueTask));
 
-        List<Task> result = taskService.getOverdueTasks();
+        List<Task> result = taskService.getOverdueTasks(null);
 
         assertThat(result).containsExactly(overdueTask);
     }
@@ -218,6 +219,26 @@ class TaskServiceTest {
         when(taskRepository.findByDueDateBeforeAndStatusNot(any(LocalDateTime.class), eq(TaskStatus.DONE)))
                 .thenReturn(List.of());
 
-        assertThat(taskService.getOverdueTasks()).isEmpty();
+        assertThat(taskService.getOverdueTasks(null)).isEmpty();
+    }
+
+    @Test
+    void getOverdueTasks_global_delegatesToRepositoryWithoutOwnershipFilter() {
+        Task overdue = new Task();
+        when(taskRepository.findAll(any(Specification.class))).thenReturn(List.of(overdue));
+
+        List<Task> result = taskService.getOverdueTasks(null);
+
+        assertThat(result).containsExactly(overdue);
+    }
+
+    @Test
+    void getOverdueTasks_scoped_delegatesToRepository() {
+        Task overdue = new Task();
+        when(taskRepository.findAll(any(Specification.class))).thenReturn(List.of(overdue));
+
+        List<Task> result = taskService.getOverdueTasks("alice");
+
+        assertThat(result).containsExactly(overdue);
     }
 }
