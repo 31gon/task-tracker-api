@@ -2,7 +2,7 @@
 
 REST API for task tracking, built with Spring Boot as a portfolio project.
 
-[![Build](https://github.com/31gon/task-tracker-api/actions/workflows/<workflow-file>.yml/badge.svg)](https://github.com/31gon/task-tracker-api/actions)
+[![CI](https://github.com/31gon/task-tracker-api/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/31gon/task-tracker-api/actions/workflows/ci.yml)
 
 ## Features
 
